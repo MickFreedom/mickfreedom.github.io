@@ -18,24 +18,41 @@
     <script>
         
         function loadDataFromStorage() {
-    var data = JSON.parse(localStorage.getItem('gameData'));
-    if (data) {
-        var table = document.getElementById("table-id");
-        for (var i = 0; i < data.length; i++) {
-            var row = table.insertRow(i + 1);
-            var playerCell = row.insertCell(0);
-            var scoreCell = row.insertCell(1);
-            var actionCell = row.insertCell(2);
-            var cancelCell = row.insertCell(3);
-            var cashoutCell = row.insertCell(4); 
-            playerCell.innerHTML = data[i].player;
-            scoreCell.innerHTML = data[i].score;
-            actionCell.innerHTML = '<button onclick="reduceScore(this)">Pay 10000</button>';
-            cancelCell.innerHTML = '<button onclick="increaseScore(this)">Cancel</button>';
-            cashoutCell.innerHTML = '<input type="number" name="input-name" value="' + data[i].cashout + '" placeholder="Enter value">';
-        }
+  var tableData = JSON.parse(localStorage.getItem("gameData")) || [];
+  if (tableData) {
+    var table = document.getElementById("table-id");
+    for (var i = 0; i < tableData.length; i++) {
+      var row = table.insertRow(i + 1);
+      var playerCell = row.insertCell(0);
+      var scoreCell = row.insertCell(1);
+      var actionCell = row.insertCell(2);
+      var cancelCell = row.insertCell(3);
+      var cashoutCell = row.insertCell(4);
+      playerCell.innerHTML = tableData[i].player;
+      scoreCell.innerHTML = tableData[i].score;
+      actionCell.innerHTML =
+        '<button onclick="reduceScore(this)">Pay 10000</button>';
+      cancelCell.innerHTML =
+        '<button onclick="increaseScore(this)">Cancel</button>';
+      cashoutCell.innerHTML =
+        '<input type="number" name="input-name" value="' +
+        tableData[i].cashout +
+        '" placeholder="Enter value">';
     }
-}        
+  }
+
+  var logData = JSON.parse(localStorage.getItem("logData")) || [];
+  if (logData) {
+    var log = document.getElementById("log");
+    for (var i = 0; i < logData.length; i++) {
+      var li = document.createElement("li");
+      li.appendChild(
+        document.createTextNode(logData[i].timestamp + " - " + logData[i].text)
+      );
+      log.appendChild(li);
+    }
+  }
+}
         function saveDataToStorage() {
     var table = document.getElementById("table-id");
     var rowCount = table.rows.length;
@@ -108,14 +125,16 @@
 		}        
         
         function logAction(text) {
-		var log = document.getElementById("log");
-		var li = document.createElement("li");
-		var date = new Date();
-		var timestamp = date.toLocaleString();
-		li.appendChild(document.createTextNode(timestamp + " - " + text));
-		log.appendChild(li);
-		saveDataToStorage();
-	}
+            var log = document.getElementById("log");
+            var li = document.createElement("li");
+            var date = new Date();
+            var timestamp = date.toLocaleString();
+            li.appendChild(document.createTextNode(timestamp + " - " + text));
+            log.appendChild(li);
+            var logData = JSON.parse(localStorage.getItem("logData")) || [];
+            logData.push({ timestamp: timestamp, text: text });
+            localStorage.setItem("logData", JSON.stringify(logData));
+        }
          function addTotalColumn() {
     var table = document.getElementById("table-id");
     var rowCount = table.rows.length;
