@@ -98,6 +98,7 @@
 			}
 			document.getElementById("input-id").value = "";
             saveDataToStorage();
+            resetLog();
 		}
         
         function reduceScore(button) {
@@ -155,6 +156,9 @@
     }
              saveDataToStorage();
 }
+        function resetLog() {
+  var log = document.getElementById("log");
+  log.innerHTML = "";
 
 	</script>
 </head>
