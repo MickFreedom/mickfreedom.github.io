@@ -145,11 +145,7 @@
     var cashoutCell = row.cells[4];
     var totalCell = row.insertCell(5);
     var totalScore = parseInt(scoreCell.innerHTML) + parseInt(cashoutCell.firstChild.value);
-           if (!isNaN(total)) {
-            totalCell.innerHTML = total;
-        } else {
-            totalCell.innerHTML = "NaN";            
-        }
+    totalCell.innerHTML = totalScore;
     }
   }
         window.onload = function() {
