@@ -114,6 +114,7 @@
 		var timestamp = date.toLocaleString();
 		li.appendChild(document.createTextNode(timestamp + " - " + text));
 		log.appendChild(li);
+		saveDataToStorage();
 	}
          function addTotalColumn() {
     var table = document.getElementById("table-id");
