@@ -136,20 +136,24 @@
             logData.push({ timestamp: timestamp, text: text });
             localStorage.setItem("logData", JSON.stringify(logData));
         }
-         function addTotalColumn() {
+        function addTotalColumn() {
   var table = document.getElementById("table-id");
   var rowCount = table.rows.length;
+  var total = 0;
   for (var i = 1; i < rowCount; i++) {
-    var row = table.rows[i];
-    var scoreCell = row.cells[1];
-    var cashoutCell = row.cells[4];
-    var totalCell = row.insertCell(5);
-    var totalScore = parseInt(scoreCell.innerHTML) + parseInt(cashoutCell.firstChild.value);
-    totalCell.innerHTML = totalScore;
+    var cashoutCell = table.rows[i].cells[4];
+    var cashoutValue = cashoutCell.firstChild.value.trim();
+    if (!cashoutValue || cashoutValue === ' ') {
+      cashoutValue = 0;
     }
+    total += parseInt(cashoutValue);
   }
-        window.onload = function() {
-  addTotalColumn();
+  var totalRow = table.insertRow(rowCount);
+  var totalLabelCell = totalRow.insertCell(0);
+  var totalValueCell = totalRow.insertCell(1);
+  totalLabelCell.innerHTML = "Total";
+  totalValueCell.innerHTML = total;
+  saveDataToStorage();
 }
 
 // Call the function to add the total column after the table is loaded
