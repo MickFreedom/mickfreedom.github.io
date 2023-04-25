@@ -137,29 +137,29 @@
             localStorage.setItem("logData", JSON.stringify(logData));
         }
          function addTotalColumn() {
-    var table = document.getElementById("table-id");
-    var rowCount = table.rows.length;
-    var totalHeader = table.rows[0].insertCell(2);
-    totalHeader.innerHTML = "Total";
-    for (var i = 1; i < rowCount; i++) {
-        var row = table.rows[i];
-        var scoreCell = row.cells[1];
-        var cashoutCell = row.cells[4]; // add cashoutCell variable
-        var totalCell = row.insertCell(2);
-        var total = parseInt(scoreCell.innerHTML) + parseInt(cashoutCell.firstChild.value); // include value of cashoutCell
-        if (!isNaN(total)) {
-            totalCell.innerHTML = total;
-        } else {
-            totalCell.innerHTML = "NaN";
-            
-        }
-    }
-             saveDataToStorage();
+  var table = document.getElementById("table-id");
+  var rowCount = table.rows.length;
+  for (var i = 1; i < rowCount; i++) {
+    var row = table.rows[i];
+    var scoreCell = row.cells[1];
+    var cashoutCell = row.cells[4];
+    var totalCell = row.insertCell(5);
+    var totalScore = parseInt(scoreCell.innerHTML) + parseInt(cashoutCell.firstChild.value);
+    totalCell.innerHTML = totalScore;
+  }
+}
+        window.onload = function() {
+  addTotalColumn();
+}
+
+// Call the function to add the total column after the table is loaded
+window.onload = function() {
+  addTotalColumn();
 }
         function resetLog() {
   var log = document.getElementById("log");
   log.innerHTML = "";
-	}
+        }
 	</script>
 </head>
 <body onload="loadDataFromStorage()">
@@ -190,6 +190,7 @@
 					<th>Action</th>
                     <th>Cancel</th>
                     <th>Cashout</th>
+                    <th>Total</th>
 				</tr>
 			</table>
 			<p id="action-text"></p>
