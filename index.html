@@ -54,36 +54,22 @@
   }
 }
         function saveDataToStorage() {
-  var table = document.getElementById("table-id");
-  var rowCount = table.rows.length;
-  var data = [];
-  var totals = {};
-  for (var i = 1; i < rowCount; i++) {
-    var row = table.rows[i];
-    var playerCell = row.cells[0];
-    var scoreCell = row.cells[1];
-    var cashoutCell = row.cells[4];
-    var player = playerCell.innerHTML;
-    var score = parseInt(scoreCell.innerHTML) || 0;
-    var cashout = cashoutCell.firstChild.value;
-    data.push({
-      player: player,
-      score: score,
-      cashout: cashout
-    });
-    totals[player] = (totals[player] || 0) + score;
-  }
-  localStorage.setItem("gameData", JSON.stringify(data));
-
-  for (var i = 1; i < rowCount; i++) {
-    var row = table.rows[i];
-    var playerCell = row.cells[0];
-    var totalCell = row.cells[5];
-    var player = playerCell.innerHTML;
-    var total = totals[player] || 0;
-    totalCell.innerHTML = total;
-  }
-}            
+    var table = document.getElementById("table-id");
+    var rowCount = table.rows.length;
+    var data = [];
+    for (var i = 1; i < rowCount; i++) {
+        var row = table.rows[i];
+        var playerCell = row.cells[0];
+        var scoreCell = row.cells[1];
+        var cashoutCell = row.cells[4];
+        data.push({
+            player: playerCell.innerHTML,
+            score: scoreCell.innerHTML,
+            cashout: cashoutCell.firstChild.value
+        });
+    }
+    localStorage.setItem('gameData', JSON.stringify(data));
+}
         var playerCount = 1;
 		function addRow() {
 			var inputText = document.getElementById("input-id").value;
